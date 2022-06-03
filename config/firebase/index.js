@@ -14,8 +14,13 @@ const firebaseConfig = {
   messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_APP_ID,
   measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID
-};
+}
+
 // Initialize Firebase
-export default firebase.apps.length
+const app =  firebase.apps.length
   ? firebase.app()
   : firebase.initializeApp(firebaseConfig)
+
+export const persistenceMode = firebase.auth.Auth.Persistence.LOCAL
+
+export default app
