@@ -9,14 +9,13 @@ import { useEffect } from "react";
 
 let validationSchema = yup.object().shape({
   email: yup.string().email('Email Inválido').required('Você tem que informar um email'),
-  password: yup.string().required('Por favor informe sua senha'),
-  username: yup.string().required('Digite seu Hub')
+  password: yup.string().required('Por favor informe sua senha')
 })
 export const Login = () => {
   const {values, errors, touched, handleBlur, handleChange, handleSubmit, isSubmitting} = useFormik({
     onSubmit: async (values, form) => {
+      firebase.auth().setPersistence(persistenceMode)
       try {
-        firebase.auth().setPersistence(persistenceMode)
         const user = await firebase.auth().signInWithEmailAndPassword(values.email, values.password)
         console.log(user)
       } catch (error) {

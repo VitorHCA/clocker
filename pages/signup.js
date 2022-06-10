@@ -5,16 +5,28 @@ import { Container, Box, Input, Button, Text, FormControl, FormLabel, FormHelper
 import { useFormik } from "formik";
 import * as yup from 'yup';
 import firebase from "../config/firebase"
+import axios from "axios";
 
 let validationSchema = yup.object().shape({
   email: yup.string().email('Email Inválido').required('Você tem que informar um email'),
-  password: yup.string().required('Por favor informe sua senha')
+  password: yup.string().required('Por favor informe sua senha'),
+  username: yup.string().required('Digite seu Hub')
 })
 export default function Home() {
   const {values, errors, touched, handleBlur, handleChange, handleSubmit, isSubmitting} = useFormik({
     onSubmit: async (values, form) => {
       try {
         const user = await firebase.auth().createUserWithEmailAndPassword(values.email, values.password)
+        // const {data} = await axios({
+        //   method: 'POST',
+        //   url: '/api/profile',
+        //   data: {
+        //     username: values.username
+        //   },
+        //   header:{
+        //     'Authentication':`Bearer ${user.getToken()}`
+        //   }
+        // })
         console.log(user)
       } catch (error) {
         console.log('Erro =>', error)
